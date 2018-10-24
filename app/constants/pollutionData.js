@@ -1,4 +1,4 @@
-const DATA = [
+const POLLUTION_DATA = [
   {
     Name:
       "\u0412\u0415\u0420\u0425\u041d\u0415\u0414\u0412\u0418\u041d\u0421\u041a",
@@ -332,3 +332,5 @@ const DATA = [
     date: "2018-10-24 06:00:00 UTC"
   }
 ];
+
+export default POLLUTION_DATA;
