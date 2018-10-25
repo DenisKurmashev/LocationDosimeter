@@ -8,6 +8,18 @@ export const getCurrentPosition = (options = {}) => {
   });
 };
 
-export const getPollutionData = ({ coords }) => {
-  console.log(coords);
+export const getPollutionData = async ({ coords: { latitude, longitude } }) => {
+  let { lat, lng } = POLLUTION_DATA[0];
+
+  lat = parseFloat(lat);
+  lng = parseFloat(lng);
+
+  console.log(lat, lng);
+
+  const result = await Geocoder.geocodePosition({
+    lat,
+    lng
+  });
+
+  console.log(result);
 };

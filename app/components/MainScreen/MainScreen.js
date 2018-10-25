@@ -10,7 +10,7 @@ class MainScreen extends PureComponent {
     const { getCurrentPosition, getPollutionData } = geolocation;
 
     (async () => {
-      getPollutionData(await getCurrentPosition());
+      await getPollutionData(await getCurrentPosition());
     })();
   }
 
