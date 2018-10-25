@@ -10,7 +10,11 @@ class MainScreen extends PureComponent {
     const { getCurrentPosition, getPollutionData } = geolocation;
 
     (async () => {
-      await getPollutionData(await getCurrentPosition());
+      const res = await getPollutionData({
+        coords: { latitude: 55.817, longitude: 27.95 }
+      });
+
+      console.log(res);
     })();
   }
 

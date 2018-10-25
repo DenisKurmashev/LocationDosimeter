@@ -8,18 +8,59 @@ export const getCurrentPosition = (options = {}) => {
   });
 };
 
-export const getPollutionData = async ({ coords: { latitude, longitude } }) => {
-  let { lat, lng } = POLLUTION_DATA[0];
+export const getPollutionData = async ({
+  coords: { latitude: lat, longitude: lng }
+}) => {
+  const COUNTRY_CODE = "BY";
+  let result = {
+    error: null,
+    pollutionLevel: null,
+    recommendations: null
+  };
 
-  lat = parseFloat(lat);
-  lng = parseFloat(lng);
+  try {
+    lat = parseFloat(lat);
+    lng = parseFloat(lng);
+  } catch (ex) {
+    result.error = ex;
+    return result;
+  }
 
-  console.log(lat, lng);
-
-  const result = await Geocoder.geocodePosition({
+  const location = await Geocoder.geocodePosition({
     lat,
     lng
   });
 
-  console.log(result);
+  const { countryCode, country, locality } = location[0];
+
+  console.log(location);
+
+  if (countryCode !== COUNTRY_CODE) {
+    result.error = `This service can't provide maintain for your country (${country}).`;
+    return result;
+  }
+
+  for (item of POLLUTION_DATA) {
+    let itemLat, itemLng;
+
+    try {
+      itemLat = parseFloat(item.lat);
+      itemLng = parseFloat(item.lng);
+    } catch (ex) {
+      result.error = `Internal application error.`;
+      return result;
+    }
+
+    let itemLocation = await Geocoder.geocodePosition({
+      lat: itemLat,
+      lng: itemLng
+    });
+
+    if (locality === itemLocation[0].locality) {
+      result.pollutionLevel = item.value;
+      break;
+    }
+  }
+
+  return result;
 };
