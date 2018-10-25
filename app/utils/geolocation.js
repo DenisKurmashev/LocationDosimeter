@@ -1,5 +1,6 @@
 import Geocoder from "react-native-geocoder";
 
+import { deepCopy, stringToNumber } from "./shared";
 import { POLLUTION_DATA } from "@constants";
 
 export const getCurrentPosition = (options = {}) => {
@@ -8,23 +9,16 @@ export const getCurrentPosition = (options = {}) => {
   });
 };
 
-export const getPollutionData = async ({
-  coords: { latitude: lat, longitude: lng }
-}) => {
+export const getPollutionData = async ({ coords: { latitude, longitude } }) => {
   const COUNTRY_CODE = "BY";
+  const lat = stringToNumber(latitude);
+  const lng = stringToNumber(longitude);
+
   let result = {
     error: null,
     pollutionLevel: null,
     recommendations: null
   };
-
-  try {
-    lat = parseFloat(lat);
-    lng = parseFloat(lng);
-  } catch (ex) {
-    result.error = ex;
-    return result;
-  }
 
   const location = await Geocoder.geocodePosition({
     lat,
@@ -41,15 +35,8 @@ export const getPollutionData = async ({
   }
 
   for (item of POLLUTION_DATA) {
-    let itemLat, itemLng;
-
-    try {
-      itemLat = parseFloat(item.lat);
-      itemLng = parseFloat(item.lng);
-    } catch (ex) {
-      result.error = `Internal application error.`;
-      return result;
-    }
+    const itemLat = stringToNumber(item.lat);
+    const itemLng = stringToNumber(item.lng);
 
     let itemLocation = await Geocoder.geocodePosition({
       lat: itemLat,
