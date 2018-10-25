@@ -33,8 +33,7 @@ export const getPollutionData = async ({ coords }) => {
 
   let result = {
     error: null,
-    pollutionLevel: null,
-    recommendations: null
+    pollutionLevel: null
   };
 
   const location = await getGeocodePosition(coords);
@@ -49,6 +48,8 @@ export const getPollutionData = async ({ coords }) => {
     return result;
   }
 
+  // Try to find current locality
+  // And get pollution level for this territory
   for (item of POLLUTION_DATA) {
     // item model - { name, lat, lng, value, date }
     let itemLocation = await getGeocodePosition(item);
