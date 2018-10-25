@@ -3,16 +3,32 @@ import Geocoder from "react-native-geocoder";
 import { deepCopy, stringToNumber } from "./shared";
 import { POLLUTION_DATA } from "@constants";
 
+const getGeocodePosition = async coords => {
+  const NY = {
+    lat: stringToNumber(coords.lat || coords.latitude),
+    lng: stringToNumber(coords.lng || coords.longitude)
+  };
+
+  let geocodePositionResult;
+
+  try {
+    geocodePositionResult = await Geocoder.geocodePosition(NY);
+  } catch (ex) {
+    console.log(ex);
+    return null;
+  }
+
+  return deepCopy(geocodePositionResult[0]);
+};
+
 export const getCurrentPosition = (options = {}) => {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject, options);
   });
 };
 
-export const getPollutionData = async ({ coords: { latitude, longitude } }) => {
+export const getPollutionData = async ({ coords }) => {
   const COUNTRY_CODE = "BY";
-  const lat = stringToNumber(latitude);
-  const lng = stringToNumber(longitude);
 
   let result = {
     error: null,
@@ -20,14 +36,12 @@ export const getPollutionData = async ({ coords: { latitude, longitude } }) => {
     recommendations: null
   };
 
-  const location = await Geocoder.geocodePosition({
-    lat,
-    lng
-  });
-
-  const { countryCode, country, locality } = location[0];
-
-  console.log(location);
+  const location = await getGeocodePosition(coords);
+  if (!location) {
+    result.error = `Internal application error!`;
+    return result;
+  }
+  const { countryCode, country, locality } = location;
 
   if (countryCode !== COUNTRY_CODE) {
     result.error = `This service can't provide maintain for your country (${country}).`;
@@ -35,15 +49,15 @@ export const getPollutionData = async ({ coords: { latitude, longitude } }) => {
   }
 
   for (item of POLLUTION_DATA) {
-    const itemLat = stringToNumber(item.lat);
-    const itemLng = stringToNumber(item.lng);
+    // item model - { name, lat, lng, value, date }
+    let itemLocation = await getGeocodePosition(item);
 
-    let itemLocation = await Geocoder.geocodePosition({
-      lat: itemLat,
-      lng: itemLng
-    });
+    if (!itemLocation) {
+      result.error = `Internal application error!`;
+      return result;
+    }
 
-    if (locality === itemLocation[0].locality) {
+    if (locality === itemLocation.locality) {
       result.pollutionLevel = item.value;
       break;
     }
