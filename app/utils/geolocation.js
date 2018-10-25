@@ -29,6 +29,7 @@ export const getCurrentPosition = (options = {}) => {
 
 export const getPollutionData = async ({ coords }) => {
   const COUNTRY_CODE = "BY";
+  const INTERNAL_ERROR = `Internal application error!`;
 
   let result = {
     error: null,
@@ -38,7 +39,7 @@ export const getPollutionData = async ({ coords }) => {
 
   const location = await getGeocodePosition(coords);
   if (!location) {
-    result.error = `Internal application error!`;
+    result.error = INTERNAL_ERROR;
     return result;
   }
   const { countryCode, country, locality } = location;
@@ -53,7 +54,7 @@ export const getPollutionData = async ({ coords }) => {
     let itemLocation = await getGeocodePosition(item);
 
     if (!itemLocation) {
-      result.error = `Internal application error!`;
+      result.error = INTERNAL_ERROR;
       return result;
     }
 
