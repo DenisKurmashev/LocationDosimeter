@@ -2,9 +2,18 @@ import React, { PureComponent } from "react";
 import { Text, View } from "react-native";
 import MapView from "react-native-maps";
 
+import { geolocation } from "@utils";
 import styles from "./styles";
 
 class MainScreen extends PureComponent {
+  componentDidMount() {
+    const { getCurrentPosition, getPollutionData } = geolocation;
+
+    (async () => {
+      getPollutionData(await getCurrentPosition());
+    })();
+  }
+
   render() {
     return (
       <View style={styles.container}>

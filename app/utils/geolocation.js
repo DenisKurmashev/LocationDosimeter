@@ -3,3 +3,7 @@ export const getCurrentPosition = (options = {}) => {
     navigator.geolocation.getCurrentPosition(resolve, reject, options);
   });
 };
+
+export const getPollutionData = coords => {
+  console.log(coords);
+};
