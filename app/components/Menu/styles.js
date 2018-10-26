@@ -1,9 +1,8 @@
 import { StyleSheet } from "react-native";
-import { isIphoneX } from "react-native-iphone-x-helper";
 
 import DefaultStyles from "@constants/styles";
 
-const PADDING = isIphoneX ? 32 : 12;
+const PADDING = DefaultStyles.BOTTOM_SPACE;
 
 const styles = {
   container: {
@@ -12,8 +11,10 @@ const styles = {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    paddingTop: 12,
-    paddingBottom: PADDING
+    paddingTop: 10,
+    paddingBottom: PADDING,
+
+    ...DefaultStyles.getDefaultShadow()
   }
 };
 

@@ -1,4 +1,7 @@
-import { getStatusBarHeight } from "react-native-iphone-x-helper";
+import {
+  getStatusBarHeight,
+  getBottomSpace
+} from "react-native-iphone-x-helper";
 
 export default {
   colors: {
@@ -16,6 +19,7 @@ export default {
   FOOTER_ITEMS_MARGIN: 1,
   ACTIVE_OPACITY: 0.6,
   STATUS_BAR_HEIGHT: getStatusBarHeight(),
+  BOTTOM_SPACE: getBottomSpace(),
 
   getDefaultShadow: () => ({
     shadowOpacity: 0.3,
