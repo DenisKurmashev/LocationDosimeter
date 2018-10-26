@@ -6,7 +6,7 @@ export const MENU_ITEMS = [
   },
   {
     buttonText: "Map",
-    navigateTo: "MainScreen",
+    navigateTo: "Map",
     icon: "map-marked-alt"
   },
   {

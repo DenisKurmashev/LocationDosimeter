@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 import DefaultStyles from "@constants/styles";
 
-const PADDING = DefaultStyles.BOTTOM_SPACE;
+const PADDING = DefaultStyles.BOTTOM_SPACE || 10;
 
 const styles = {
   container: {
