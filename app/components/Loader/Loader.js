@@ -9,7 +9,7 @@ class Loader extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <Text> {text ? text : "Loading"} </Text>
+        <Text style={styles.text}> {text ? text : "Loading"} </Text>
       </View>
     );
   }

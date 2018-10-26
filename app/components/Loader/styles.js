@@ -7,6 +7,9 @@ const styles = {
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
+  },
+  text: {
+    textAlign: "center"
   }
 };
 
