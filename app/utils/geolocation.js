@@ -3,7 +3,7 @@ import Geocoder from "react-native-geocoder";
 import { deepCopy, stringToNumber } from "./shared";
 import { POLLUTION_DATA } from "@constants";
 
-const getGeocodePosition = async coords => {
+export const getGeocodePosition = async coords => {
   const NY = {
     lat: stringToNumber(coords.lat || coords.latitude),
     lng: stringToNumber(coords.lng || coords.longitude)
@@ -35,6 +35,11 @@ export const getPollutionData = async ({ coords }) => {
     error: null,
     pollutionLevel: null
   };
+
+  if (!coords) {
+    result.error = INTERNAL_ERROR;
+    return result;
+  }
 
   const location = await getGeocodePosition(coords);
   if (!location) {
