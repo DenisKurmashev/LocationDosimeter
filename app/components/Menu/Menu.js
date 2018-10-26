@@ -11,10 +11,12 @@ class Menu extends Component {
   }
 
   _onPressItem = navigateTo => {
-    this.props.navigate(navigateTo);
+    this.props.jumpTo(navigateTo);
   };
 
   render() {
+    console.log(this.props);
+
     return (
       <View style={styles.container} testID="main_screen_footer">
         {MENU_ITEMS.map((item, index) => (

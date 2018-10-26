@@ -14,7 +14,7 @@ class MenuItem extends PureComponent {
 
   render() {
     const { buttonText, icon } = this.props;
-    console.log(DefaultStyles);
+
     return (
       <View style={styles.item}>
         <TouchableOpacity
