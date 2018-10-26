@@ -1,7 +1,7 @@
 import React from "react";
-import { createStackNavigator } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation";
 
-import { MainScreen } from "@cmp";
+import { MainScreen, Menu } from "@cmp";
 
 const routes = {
   MainScreen: {
@@ -11,7 +11,7 @@ const routes = {
 
 const routerConfig = {
   initialRouteName: "MainScreen",
-  headerMode: "none"
+  tabBarComponent: props => <Menu {...props} />
 };
 
-export default createStackNavigator(routes, routerConfig);
+export default createBottomTabNavigator(routes, routerConfig);
