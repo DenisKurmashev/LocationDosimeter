@@ -28,9 +28,13 @@ class MapScreen extends PureComponent {
     const { latitude, longitude } = location.coords;
 
     const userLocation = {
-      latitude,
-      longitude
+      latitude: "53.350000",
+      longitude: "32.067000"
     };
+    // {
+    //   latitude,
+    //   longitude
+    // };
 
     const initialRegion = {
       ...userLocation,

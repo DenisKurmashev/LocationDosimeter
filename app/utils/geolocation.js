@@ -33,7 +33,8 @@ export const getPollutionData = async ({ coords }) => {
 
   let result = {
     error: null,
-    pollutionLevel: null
+    pollutionLevel: null,
+    date: null
   };
 
   if (!coords) {
@@ -49,7 +50,7 @@ export const getPollutionData = async ({ coords }) => {
   const { countryCode, country, locality } = location;
 
   if (countryCode !== COUNTRY_CODE) {
-    result.error = `This service can't provide maintain for your country (${country}).`;
+    result.error = `This service doesn't provide maintain for your country (${country}).`;
     return result;
   }
 
@@ -66,6 +67,7 @@ export const getPollutionData = async ({ coords }) => {
 
     if (locality === itemLocation.locality) {
       result.pollutionLevel = item.value;
+      result.date = item.date;
       break;
     }
   }

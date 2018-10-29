@@ -9,7 +9,8 @@ class MainScreen extends PureComponent {
   state = {
     error: null,
     formattedAddress: null,
-    pollutionLevel: null
+    pollutionLevel: null,
+    date: null
   };
 
   async componentWillMount() {
@@ -38,25 +39,36 @@ class MainScreen extends PureComponent {
 
     this.setState({ formattedAddress: geocodePosition.formattedAddress });
 
-    const pollution = await getPollutionData({ coords });
+    const { error, pollutionLevel, date } = await getPollutionData({ coords });
 
-    if (pollution.error) {
-      this.setState({ error: pollution.error });
+    if (error) {
+      this.setState({ error });
       return;
     }
 
-    this.setState({ pollutionLevel: pollutionLevel.pollutionLevel });
+    this.setState({ pollutionLevel, date });
   }
 
   render() {
-    const { error, formattedAddress, pollutionLevel } = this.state;
+    const { error, formattedAddress, pollutionLevel, date } = this.state;
 
-    if (error) return <Loader text={error} />;
+    if (error || !formattedAddress || !pollutionLevel || !date)
+      return <Loader text={error} />;
 
     return (
       <View style={styles.container}>
+        <Text style={styles.recommendation}>
+          {pollutionLevel < 0.2
+            ? "Optimal"
+            : pollutionLevel < 0.5
+              ? "Warning! We recommend to leave this place"
+              : "Dangerous! You must go away!"}
+        </Text>
         <Text>{formattedAddress}</Text>
-        <Text>Pollution level {pollutionLevel}</Text>
+        <Text>
+          Pollution level {pollutionLevel} mS/H (micro Sievert in hour)
+        </Text>
+        <Text>[ {new Date(date).toLocaleDateString()} ]</Text>
       </View>
     );
   }

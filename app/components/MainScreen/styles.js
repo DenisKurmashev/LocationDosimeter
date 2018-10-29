@@ -11,6 +11,12 @@ const styles = {
     marginBottom: margin,
     alignItems: "center",
     justifyContent: "center"
+  },
+  recommendation: {
+    marginTop: 15,
+    marginBottom: 15,
+    color: "green",
+    fontSize: 20
   }
 };
 
