@@ -10,3 +10,8 @@ A simple cross-platform mobile application that shows the level of radiation pol
 ## Technologies
 
 Application wrote by ReactNative
+
+## Screenshots
+
+![Main screen](/assets/1.png)
+![Second screen](/assets/2.png)
