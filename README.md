@@ -5,7 +5,8 @@ A simple cross-platform mobile application that shows the level of radiation pol
 ## For run on iOS
 
 - `npm i`
-- `react-scripts run-ios`
+- `node start`
+- Open XCode and run app
 
 ## Technologies
 
